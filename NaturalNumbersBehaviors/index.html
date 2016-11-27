@@ -1,0 +1,142 @@
+
+
+<!DOCTYPE html>
+<html >
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/x-icon" href="https://production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" />
+  <link rel="mask-icon" type="" href="https://production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" />
+  <title>Number Behaviors</title>
+  
+  
+  
+  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+
+      <style>
+      td{
+  text-align:center;
+}
+    </style>
+
+  
+  
+  
+  
+</head>
+
+<body translate="no" >
+
+  <div style="padding:60px">
+  
+ enter range 
+     <input id="start" value=1 type="number" >  
+     <input id="end" value=30 type="number"  placeholder="range to">
+     <button onclick="calculate()">calculate</button>
+  
+
+  <pre style="margin:50px;" ><code class="statistics"></code></pre>
+<div style="padding:50px;" id = "resultContainer" ></div>
+
+  
+    <script>
+
+
+
+function steps (number){
+   var steps = 0;
+   while(number!=1){
+       if(number % 2 == 0){
+           number/=2;
+       }else{
+          number = number*3+1;
+       }
+       steps++;
+   }
+   return steps;
+}
+
+
+function calculate() {
+    var result = [];
+    var start = document.querySelector('#start').value;
+    var end = document.querySelector('#end').value;
+    for(var i=start;i<=end;i++){
+        result.push({number:i,steps:Number(steps(i))})
+    }
+
+    drawResult(result);
+}
+
+
+
+function drawResult(array) {
+
+
+
+ var content = array.map(function(v) {
+    var name = "<td>" +v.number+"</td>";
+    var value = "<td >" +v.steps+"</td>";
+    var result = name+value;
+    return "<tr>" + result + "<tr>"
+  }).join("");
+
+  var table = "<table class='table-bordered table-striped'><tr><th  style='width:200px;height:40px'>Number</th><th  style='width:200px;height:40px'>Steps</th></tr>" + content + "</table>"
+   document.querySelector('#resultContainer').innerHTML = table;
+
+   drawStatistics(array);
+}
+
+
+
+function drawStatistics(array){
+      var stats = {};
+      stats.max = 0;
+      stats.averageSteps = 0;
+      stats.mode = 0;
+
+
+     array.sort(function(a,b){
+         return b.steps-a.steps;
+     });
+
+     stats.max = array[0];
+     var counter = {
+         pre:0,
+         now:1
+     };
+
+     array.forEach(function(v,i){
+         if(i>0 && array[i-1].steps == v.steps ){
+             counter.now++;
+             if(counter.now > counter.pre){
+                 counter.pre ++ ;
+                 stats.mode ={
+                     value:v.steps,
+                     count:counter.pre
+                 } 
+                 
+             }
+         }else{
+             counter.now=1;
+         }
+
+         stats.averageSteps += v.steps/array.length;
+     })
+     stats.averageSteps = Math.round(stats.averageSteps);
+ 
+ document.querySelector('.statistics').innerHTML = JSON.stringify(stats, null, '\t');
+    console.log(stats);
+
+
+}
+  </script>
+
+  
+
+  
+  
+
+</body>
+</html>
+ 
