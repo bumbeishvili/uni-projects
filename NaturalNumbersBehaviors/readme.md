@@ -8,6 +8,18 @@ So, we are doing this:
 
 This is statistic for first 10000 records
 
+<pre style="margin:50px;"><code class="statistics">{
+	"max": {
+		"number": 6171,
+		"steps": 261
+	},
+	"averageSteps": 85,
+	"mode": {
+		"value": 52,
+		"count": 190
+	}
+}</code></pre>
+
 This table shows how many steps do numbers need in range 1 from 10000:
 
 
