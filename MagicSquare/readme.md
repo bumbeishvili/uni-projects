@@ -1,4 +1,4 @@
-
+# Magic Square
 magic square is simple n length square, filled with numbers from 1 to n square , where 
 in each row, in each column and in each diagonal, sum of numbers is same
 
