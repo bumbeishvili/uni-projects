@@ -1,0 +1,135 @@
+
+
+<!DOCTYPE html>
+<html >
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" type="image/x-icon" href="https://production-assets.codepen.io/assets/favicon/favicon-8ea04875e70c4b0bb41da869e81236e54394d63638a1ef12fa558a4a835f1164.ico" />
+  <link rel="mask-icon" type="" href="https://production-assets.codepen.io/assets/favicon/logo-pin-f2d2b6d2c61838f7e76325261b7195c27224080bc099486ddd6dccb469b8e8e6.svg" color="#111" />
+  <title>CodePen - Odd magic numbers</title>
+  
+  
+  
+  <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+
+      <style>
+      td{
+  text-align:center;
+}
+    </style>
+
+  
+  
+  
+  
+</head>
+
+<body translate="no" >
+
+  <div style="padding:60px">
+  
+ შეიყვანეთ კენტი რიცხვი <input id="oddNumber" value=3 type="number" >  <button onclick="calculate()">გამოთვლა</button>
+  
+  დანამატი<input type="number" id="addition" value="0" placeholder="რიცხვის დამატება">
+<br>
+  <h2 class="sum"></h2>
+</div>
+
+<div style="padding:50px;" id = "resultContainer" ></div>
+  
+  
+    <script>
+    var nestedArray = [
+  [1, 2, 3, 4],
+  [1, 2, 3, 4]
+];
+
+function calculate() {
+  var oddNumber = document.querySelector('#oddNumber').value;
+  //initialise
+  var result = [];
+  for (var i = 0; i < oddNumber; i++) {
+    var row = [];
+    for (var j = 0; j < oddNumber; j++) {
+      row.push(0);
+    }
+    result.push(row)
+  }
+
+  /*
+1. Start by placing 1 in the middle column of the top row.
+2. Continue by always placing the next number (say k+1) in the square diagonally up and to the right. 
+Example: if integer ‘k’ was placed in position [row][col], then integer ‘k+1’ should be positioned in [row-1][col+1], unless one of the following occurs:
+a)	If a move takes you above the top row in the jth column, move to the bottom of the jth column and place ‘k+1’ there.
+b)	If a move takes you outside to the right of the square in the ith row, place ‘k+1’ in the i-th row at the left side.
+c)	If a move takes you to an already filled square of if you move out of the square at the upper right hand corner, place ‘k+1’ immediately below ‘k’
+*/
+  var length = Number(oddNumber)
+  var row = 0,
+    col = (length - 1) / 2;
+  
+  for(var k=1;k<=length*length;k++){
+    debugger;
+    result[row][col]=k;
+    col++;
+    row--;
+    if(row == -1){
+      row=length-1;
+    }
+    if(col==length){
+      col=0;
+    }
+    
+    if(result[row][col] != 0){
+     if(row == length-1){
+        row=1;
+       }else{
+          row+=2;
+       }
+      if(col==0){
+        col=length-1;
+      }else{
+          col--;
+      }
+     
+    
+    }
+
+    
+    
+    
+    console.table(result);
+    console.log(row,col)
+  }
+
+
+
+drawResult(result);
+}
+
+function drawResult(array) {
+  var addition = Number(document.querySelector('#addition').value);
+  var n = array.length ;
+  var sq = n*n;
+  var sum = sq*(sq+1)/2/n;
+  document.querySelector('.sum').innerHTML = "მაგიური კონსტანტა = "+sum;
+  var content = array.map(function(v) {
+    var result = v.map(function(j) {
+      return "<td style='width:40px;height:40px'>" + (j+addition) + "</td>"
+    }).join("");
+    return "<tr>" + result + "<tr>"
+  }).join("");
+
+  var table = "<table class='table-bordered table-striped'>" + content + "</table>"
+  document.querySelector('#resultContainer').innerHTML = table;
+
+}
+  </script>
+
+  
+  
+
+</body>
+</html>
+ 
