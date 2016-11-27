@@ -75,13 +75,13 @@ function drawResult(array) {
 
 
  var content = array.map(function(v) {
-    var name = "<td style='width:200px;height:40px'>" +v.number+"</td>";
-    var value = "<td style='width:200px;height:40px'>" +v.steps+"</td>";
+    var name = "<td>" +v.number+"</td>";
+    var value = "<td >" +v.steps+"</td>";
     var result = name+value;
     return "<tr>" + result + "<tr>"
   }).join("");
 
-  var table = "<table class='table-bordered table-striped'><tr><th>Number</th><th>Steps</th></tr>" + content + "</table>"
+  var table = "<table class='table-bordered table-striped'><tr><th  style='width:200px;height:40px'>Number</th><th  style='width:200px;height:40px'>Steps</th></tr>" + content + "</table>"
    document.querySelector('#resultContainer').innerHTML = table;
 
    drawStatistics(array);
